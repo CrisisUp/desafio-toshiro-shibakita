@@ -23,9 +23,29 @@ A solução utiliza **Nginx** como Proxy Reverso, encaminhando requisições par
 
 ## 🚀 Como Rodar
 
-1. **Clone o repositório:**
+### 1. **Clone o repositório:**
 
    ```bash
    git clone https://github.com/CrisisUp/desafio-toshiro-shibakita.git
    cd desafio-toshiro-shibakita
+   ```
+
+### 2. Subida da InfraestruturaExecute o comando para construir e iniciar os serviços
+
+   ```bash
+   docker compose up -d --build
+   ```
+
+### 3. Endereços de Acesso (Stack Ativa)
+
+| Serviço | Endereço Local | Função |
+| :--- | :--- | :--- |
+| **Aplicação PHP** | [http://localhost](http://localhost) | Landing page que gera registros no banco |
+| **Prometheus** | [http://localhost:9090](http://localhost:9090) | Banco de dados de métricas e consultas (PromQL) |
+| **cAdvisor** | [http://localhost:8081](http://localhost:8081) | Exportador de métricas de hardware dos containers |
+
+### 4. Para conferir se os dados aleatórios estão sendo gravados corretamente
+
+   ```bash
+   docker compose exec db mysql -u root -pSenhaSegura123 -e "USE meubanco; SELECT * FROM dados;"
    ```
