@@ -7,14 +7,21 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout do código
+      uses: actions/checkout@v4
 
-    - name: Build the PHP image
+    - name: Validar sintaxe do Docker Compose
+      run: docker compose config
+
+    - name: Build da imagem PHP personalizada
       run: docker build -t meu-projeto-php:latest -f Dockerfile.php .
 
-    - name: Build the Nginx image
-      run: docker build -t meu-projeto-nginx:latest -f docker/nginx/Dockerfile . # Se movermos o dockerfile do nginx
+    - name: Teste de integração (Subir ambiente)
+      run: |
+        docker compose up -d
+        sleep 10
+        docker compose ps
