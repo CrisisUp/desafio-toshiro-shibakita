@@ -1,0 +1,20 @@
+name: Docker CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build the PHP image
+      run: docker build -t meu-projeto-php:latest -f Dockerfile.php .
+
+    - name: Build the Nginx image
+      run: docker build -t meu-projeto-nginx:latest -f docker/nginx/Dockerfile . # Se movermos o dockerfile do nginx
